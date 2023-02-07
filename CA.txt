@@ -2,4 +2,18 @@
 
 crt.sh  registry available for certificate validation search. Cert is only way to determine validaty of web source.
 
+$ openssl s_client -connect FQDN:port
+$ openssl s_client -connect twitter.com:443 -showcerts (or w/o -showcerts)
+
+
+
+
+
+PS C:\>Get-ChildItem -Path Cert:\localMachine\My | Test-Certificate -Policy SSL -DNSName "dns=contoso.com"
+Verifies each certificate in the MY store of the local machine and verifies that it is valid for SSL with the DNS name specified.
+
+Test-Certificate -Cert cert:\currentuser\my\191c46f680f08a9e6ef3f6783140f60a979c7d3b -AllowUntrustedRoot -EKU "1.3.6.1.5.5.7.3.1" -User
+This example verifies that the provided EKU is valid for the specified certificate and its chain. Revocation checking is not performed.
+
+
 
