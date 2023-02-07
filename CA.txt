@@ -7,7 +7,9 @@ $ openssl s_client -connect twitter.com:443 -showcerts          (or w/o -showcer
 Save certificate with all begining and end of line into file.txt
 $ openssl x509 -in file.txt -noout -text                        #For trouble shoot, extracted full certificate.  
 
-
+* Serial Number: only unique number by Issuer - different issuer might have same serial number.
+* Signature alghoritm: algo from ICA that signed cert.
+* 
 
 
 openssl s_client -connect lvrtc.lv:443 #makes ssl conn to lvrtc on port 443 and everything that we type in terminal is beeing sent to twitter! at this point its like we did telnet on port 80 to http webserver. we can:
@@ -21,7 +23,7 @@ openssl s_client -connect lvrtc.lv:443
 We can see certificate LVRTC in terminal.
  save it to file.  file.txt
 
- - dont want output, want text format. Reads certificate, its base64?
+
 1.) version number - version of file certification. Determines whats inside cert. Like X509v3 extension.
 2.)Serial number Unique to Issuer! Different ICA can have same number!
 3.) Signature alghoritm - algo from ICA that signed cert.
