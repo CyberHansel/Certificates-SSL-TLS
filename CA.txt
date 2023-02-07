@@ -15,9 +15,38 @@ $ openssl x509 -in file.txt -noout -text                        #For trouble sho
       Not After: last date, after what cert expires.
 * Subject: For what organization certificate is issued.
 * Subject public key information: Includes Organization public key.
-
- 
+      Example below - Both modulos and exponent make public key of RSA.
+         Modulus:
+            00:d3:f6:56:
+            45:f6:a4:66:
+            7d:45:66:51:
+            82:5f
+         Exponent: 65537 (0x10001)
 For Subject to prove that he is real owner of organization has to provide to CA something that proves he's owner of private key of that organization.
+
+* X509v3 extensions:   Are found only in v3 certificate.
+      X509v3 Authority key Identifier:                      These both values are simply hash from both public and
+            keyid:B7:6B:A3:.....:F5:N7                      private keys, to track which keys are used in all the times, 
+      X509v3 Subject key Identifier:                        because you can create new keys each year for safety.
+            keyid:45:44:53:.....:HT:E7:B6            
+
+      X509v3 Subject Alternative Name:
+            DNS:twitter.com, DNS: www.twitter.com, DNS *.twitter.com !!!
+            
+            Wildcard: *.twitter.com
+                  Protect: mail.twitter.com  images.twitter.com         !!!
+                  NOT Protect: twitter.com, us.mail.twitter.com         !!!  
+      
+      X509v3 Key Usage: critical
+            Digital Signature, Key Encipherment (used the keys in this signature, use asimetric keys to exchange simetric keys.)       
+      X509v3 Extended Key Usage:
+            TLS web Server Authentication, TLS Web Client Authentication
+      X509v3 CRL Distribution Points:
+            Full Name:
+                  URI:http://crt3.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl
+            Full Name:
+                  URI:http://crt4.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl              
+
 
 
 openssl s_client -connect lvrtc.lv:443 #makes ssl conn to lvrtc on port 443 and everything that we type in terminal is beeing sent to twitter! at this point its like we did telnet on port 80 to http webserver. we can:
@@ -27,14 +56,9 @@ Host: twitter.com
 
 And we can get webpage, like we have gone with telnet to port 80!!!
 
-openssl s_client -connect lvrtc.lv:443 
-We can see certificate LVRTC in terminal.
- save it to file.  file.txt
 
 
-1.) version number - version of file certification. Determines whats inside cert. Like X509v3 extension.
-2.)Serial number Unique to Issuer! Different ICA can have same number!
-3.) Signature alghoritm - algo from ICA that signed cert.
+
 
 Also we need full TLS handshake (Deep Dive). Who ever owns private key that corelates to public key of certificate is real domain.
 ------------------------------------------
