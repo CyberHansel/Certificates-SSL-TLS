@@ -44,8 +44,8 @@ For Subject to prove that he is real owner of organization has to provide to CA 
 
       X509v3 CRL Distribution Points:                                                     Certificates are just like an ID card. If we lose one its
             Full Name:                                                                    still valid. This is "Revoking certificate!". there is 2 ways
-                  URI:http://crt3.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl          to revoke cert, first - old way with CRL. 
-            Full Name:
+                  URI:http://crt3.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl          to revoke cert, first - old way with CRL. New way OCSP !!!!
+            Full Name:                                                                    Online cerificate status protocol.
                   URI:http://crt4.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl              
 
 We can check how our browser acts with different certificate errors in "badssl.com" page!
