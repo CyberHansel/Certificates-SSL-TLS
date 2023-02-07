@@ -8,8 +8,16 @@ Save certificate with all begining and end of line into file.txt
 $ openssl x509 -in file.txt -noout -text                        #For trouble shoot, extracted full certificate.  
 
 * Serial Number: only unique number by Issuer - different issuer might have same serial number.
-* Signature alghoritm: algo from ICA that signed cert.
-* 
+* Signature alghoritm: algo from ICA that signed cert, basicly proof that CA signed certificate.
+* Issuer: CA that issued that certificate.
+* Validity: 
+      Not Before: date when cert start to be valid.
+      Not After: last date, after what cert expires.
+* Subject: For what organization certificate is issued.
+* Subject public key information: Includes Organization public key.
+
+ 
+For Subject to prove that he is real owner of organization has to provide to CA something that proves he's owner of private key of that organization.
 
 
 openssl s_client -connect lvrtc.lv:443 #makes ssl conn to lvrtc on port 443 and everything that we type in terminal is beeing sent to twitter! at this point its like we did telnet on port 80 to http webserver. we can:
