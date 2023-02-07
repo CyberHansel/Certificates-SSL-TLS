@@ -1,2 +1,5 @@
-Certificates of Authority
+"Certificates of Authority" also Root CA and "Intermediate Certificate Authorities"
+
+crt.sh  registry available for certificate validation search. Cert is only way to determine validaty of web source.
+
 
