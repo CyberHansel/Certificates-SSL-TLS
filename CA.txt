@@ -5,8 +5,59 @@ crt.sh  registry available for certificate validation search. Cert is only way t
 $ openssl s_client -connect FQDN:port
 $ openssl s_client -connect twitter.com:443 -showcerts (or w/o -showcerts)
 
+using namespace System.Net.Sockets
+using namespace System.Net.Security
+using namespace System.Security.Cryptography.X509Certificates
 
+function ConvertFrom-X509Certificate {
+    param(
+        [Parameter(ValueFromPipeline)]
+        [X509Certificate2]$Certificate
+    )
 
+    process {
+        @(
+            '-----BEGIN CERTIFICATE-----'
+            [Convert]::ToBase64String(
+                $Certificate.Export([X509ContentType]::Cert),
+                [Base64FormattingOptions]::InsertLineBreaks
+            )
+            '-----END CERTIFICATE-----'
+        ) -join [Environment]::NewLine
+    }
+}
+
+function Get-RemoteCertificate {
+    param(
+        [Alias('CN')]
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$ComputerName,
+
+        [Parameter(Position = 1)]
+        [UInt16]$Port = 443,
+
+        [ValidateSet('Base64', 'X509Certificate')]
+        [string]$As = 'X509Certificate'
+    )
+
+    $tcpClient = [TcpClient]::new($ComputerName, $Port)
+    try {
+        $tlsClient = [SslStream]::new($tcpClient.GetStream())
+        $tlsClient.AuthenticateAsClient($ComputerName)
+
+        if ($As -eq 'Base64') {
+            return $tlsClient.RemoteCertificate |ConvertFrom-X509Certificate
+        }
+
+        return $tlsClient.RemoteCertificate -as [X509Certificate2]
+    }
+    finally {
+        if ($tlsClient -is [IDisposable]) {
+            $tlsClient.Dispose()
+        }
+        $tcpClient.Dispose()
+    }
+}
 
 
 PS C:\>Get-ChildItem -Path Cert:\localMachine\My | Test-Certificate -Policy SSL -DNSName "dns=contoso.com"
