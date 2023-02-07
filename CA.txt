@@ -41,11 +41,15 @@ For Subject to prove that he is real owner of organization has to provide to CA 
             Digital Signature, Key Encipherment (used the keys in this signature, use asimetric keys to exchange simetric keys.)       
       X509v3 Extended Key Usage:
             TLS web Server Authentication, TLS Web Client Authentication
-      X509v3 CRL Distribution Points:
-            Full Name:
-                  URI:http://crt3.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl
+
+      X509v3 CRL Distribution Points:                                                     Certificates are just like an ID card. If we lose one its
+            Full Name:                                                                    still valid. This is "Revoking certificate!". there is 2 ways
+                  URI:http://crt3.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl          to revoke cert, first - old way with CRL. 
             Full Name:
                   URI:http://crt4.digicert.com/DigiCertTLSRSASHA2562020CA1-4.crl              
+
+We can check how our browser acts with different certificate errors in "badssl.com" page!
+
 
 
 
