@@ -50,6 +50,7 @@ For Subject to prove that he is real owner of organization has to provide to CA 
 
 We can check how our browser acts with different certificate errors in "badssl.com" page!
 
+36:30
 
 
 
