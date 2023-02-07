@@ -1,64 +1,52 @@
-"Certificates of Authority" also Root CA and "Intermediate Certificate Authorities"
+"Certificates of Authority" also Root CA and their delegated "Intermediate Certificate Authorities"
 
 crt.sh  registry available for certificate validation search. Cert is only way to determine validaty of web source.
 
 $ openssl s_client -connect FQDN:port
-$ openssl s_client -connect twitter.com:443 -showcerts (or w/o -showcerts)
+$ openssl s_client -connect twitter.com:443 -showcerts          (or w/o -showcerts)
+Save certificate with all begining and end of line into file.txt
+$ openssl x509 -in file.txt -noout -text                        #For trouble shoot, extracted full certificate.  
 
-using namespace System.Net.Sockets
-using namespace System.Net.Security
-using namespace System.Security.Cryptography.X509Certificates
 
-function ConvertFrom-X509Certificate {
-    param(
-        [Parameter(ValueFromPipeline)]
-        [X509Certificate2]$Certificate
-    )
 
-    process {
-        @(
-            '-----BEGIN CERTIFICATE-----'
-            [Convert]::ToBase64String(
-                $Certificate.Export([X509ContentType]::Cert),
-                [Base64FormattingOptions]::InsertLineBreaks
-            )
-            '-----END CERTIFICATE-----'
-        ) -join [Environment]::NewLine
-    }
-}
 
-function Get-RemoteCertificate {
-    param(
-        [Alias('CN')]
-        [Parameter(Mandatory = $true, Position = 0)]
-        [string]$ComputerName,
+openssl s_client -connect lvrtc.lv:443 #makes ssl conn to lvrtc on port 443 and everything that we type in terminal is beeing sent to twitter! at this point its like we did telnet on port 80 to http webserver. we can:
 
-        [Parameter(Position = 1)]
-        [UInt16]$Port = 443,
+GET /index.html HTTP/1.1
+Host: twitter.com
 
-        [ValidateSet('Base64', 'X509Certificate')]
-        [string]$As = 'X509Certificate'
-    )
+And we can get webpage, like we have gone with telnet to port 80!!!
 
-    $tcpClient = [TcpClient]::new($ComputerName, $Port)
-    try {
-        $tlsClient = [SslStream]::new($tcpClient.GetStream())
-        $tlsClient.AuthenticateAsClient($ComputerName)
+openssl s_client -connect lvrtc.lv:443 
+We can see certificate LVRTC in terminal.
+ save it to file.  file.txt
 
-        if ($As -eq 'Base64') {
-            return $tlsClient.RemoteCertificate |ConvertFrom-X509Certificate
-        }
+ - dont want output, want text format. Reads certificate, its base64?
+1.) version number - version of file certification. Determines whats inside cert. Like X509v3 extension.
+2.)Serial number Unique to Issuer! Different ICA can have same number!
+3.) Signature alghoritm - algo from ICA that signed cert.
 
-        return $tlsClient.RemoteCertificate -as [X509Certificate2]
-    }
-    finally {
-        if ($tlsClient -is [IDisposable]) {
-            $tlsClient.Dispose()
-        }
-        $tcpClient.Dispose()
-    }
-}
+Also we need full TLS handshake (Deep Dive). Who ever owns private key that corelates to public key of certificate is real domain.
+------------------------------------------
+*.twitter.com protects 1 subdomain, but doesn't protect 2 subdomains us.mail.twitter.com and twitter.com!!!
+---------------------------------------------
+30:00
 
+lnk fails
+php myadmin noslēpt!
+
+Programmēsanas frameworkos ir drošas sql funkcijas, ko ieviest 
+
+https://www.youtube.com/watch?v=QhW-0gceTYY  1h:00:00
+badssl.com
+
+
+
+
+
+
+
+------------------------
 
 PS C:\>Get-ChildItem -Path Cert:\localMachine\My | Test-Certificate -Policy SSL -DNSName "dns=contoso.com"
 Verifies each certificate in the MY store of the local machine and verifies that it is valid for SSL with the DNS name specified.
