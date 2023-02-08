@@ -24,18 +24,24 @@ $ openssl x509 -in file.txt -noout -text                        #For trouble sho
          Exponent: 65537 (0x10001)
 For Subject to prove that he is real owner of organization has to provide to CA something that proves he's owner of private key of that organization.
 
-* X509v3 extensions:   Are found only in v3 certificate.
+[info]
+X.509v3, specifically, is the third version of the X.509 standard and is the most widely used version today. It defines the format for digital certificates, which are used to verify the identity of an entity and to secure communications over the internet.
+A digital certificate contains information about the entity that is being authenticated, such as its name, address, and public key. It also includes information about the certificate authority (CA) that issued the certificate, such as its name and the digital signature of the CA. The certificate is digitally signed by the issuing CA, which attests to the authenticity of the information contained in the certificate.
+X.509v3 certificates are commonly used in a variety of applications, including SSL/TLS, email security, code signing, and device authentication.
+[info]
+
+* X509v3 extensions:  X509v3 Are found only in v3 certificate.
       X509v3 Authority key Identifier:                      These both values are simply hash from both public and
             keyid:B7:6B:A3:.....:F5:N7                      private keys, to track which keys are used in all the times, 
       X509v3 Subject key Identifier:                        because you can create new keys each year for safety.
             keyid:45:44:53:.....:HT:E7:B6            
 
       X509v3 Subject Alternative Name:
-            DNS:twitter.com, DNS: www.twitter.com, DNS *.twitter.com !!!
+            DNS:twitter.com, DNS: www.twitter.com, DNS *.twitter.com !!!      
             
             Wildcard: *.twitter.com
-                  Protect: mail.twitter.com  images.twitter.com         !!!
-                  NOT Protect: twitter.com, us.mail.twitter.com         !!!  
+                  Protect: mail.twitter.com  images.twitter.com         !!! * wildcard only affects 1 sub domain, not 2 or 3!
+                  NOT Protect: twitter.com, us.mail.twitter.com         !!!  These are 
       
       X509v3 Key Usage: critical
             Digital Signature, Key Encipherment (used the keys in this signature, use asimetric keys to exchange simetric keys.)       
@@ -78,23 +84,3 @@ CA Issuers link to download revoked cert from their side directly.
                   45:f6:a4:66:                              This is Certificate Authority taking their RSA key and encrypting sha-256 hash of the content of the 
                   7d:45:66:51:                              certificate and output of that is put right here. And that is actually validation that that is legitimate
                                                             certificate browser can trust.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
