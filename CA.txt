@@ -50,7 +50,42 @@ For Subject to prove that he is real owner of organization has to provide to CA 
 
 We can check how our browser acts with different certificate errors in "badssl.com" page!
 
-36:30
+      X509v3 Certificate Policies:                                                   
+            Policy: 2.23.140.1.2.2                    3 types of certificates (1. DV, Domain validation cert, only validate that you own particular domain)
+                  CPS: http://ww.digicert.com/CPS     (2, OV, verifies you are actual organization) (3, EV, more extended, expensive)
+                  
+      Authority Information Access:                                                   
+            OCSP - URI:http://ww.digicert.com/                                                  Asks for revofication to CA directy, CRL downloaded list of every      
+            CA Issuers - URI:http://cacerts.digicert.com/DigiCertTLSRSASHA2562020CA1-1.crt      that was revoked. OSCP is more eficient.
+
+CA Issuers link to download revoked cert from their side directly.
+
+      X509v3 Basic constraits: critical:                                                   
+            CA: False                     Shows if organization (twitter.com) in this example, can sign another certificates for any other website, like CA
+            
+            
+      CT Precertificate SCTs:             Certificate transparrency involves that every certificate thats signed is saved in public registry, this invilves
+                                          that browser when receive cert from website to compare with public registries saved versions.
+           Signed Certificate timestamp:                          Since 2017 started this practive, also we can find any other certificates, that
+                  Version    : v (0x0)                            are created.
+                  Log ID     : E8:DA:EB:F5..
+                  Timestamp  : Jan 10 00:15..
+                  Extension  : none
+                  Signature  :ecdsa-with-SHA256
+                  
+      Signature algorithm: sha256WithRSAEncription
+                  00:d3:f6:56:                              Actual signature that allows browser to trust for every information that is provided in this certificate
+                  45:f6:a4:66:                              This is Certificate Authority taking their RSA key and encrypting sha-256 hash of the content of the 
+                  7d:45:66:51:                              certificate and output of that is put right here. And that is actually validation that that is legitimate
+                                                            certificate browser can trust.
+
+
+
+
+
+
+
+
 
 
 
